@@ -7,8 +7,8 @@ export default class Db{
     constructor(dir = '', database_name){
         this._filebank_dir = dir;
     
-        if(!this.verifyIfAlreadyExists(dir)){
-            this.createDatabaseFile(dir, database_name);
+        if(!this.#verifyIfAlreadyExists(dir)){
+            this.#createDatabaseFile(dir, database_name);
         }
         
         return {
@@ -16,15 +16,32 @@ export default class Db{
         };
     }
 
-    verifyIfAlreadyExists(dir){
-        console.log('verifyIfAlreadyExists');
+    #verifyIfAlreadyExists(dir = ''){
+        try {
+            fs.readFileSync(dir)
+            return true
+        } catch (error) {
+            return false
+        }
+
     }
 
-    createDatabaseFile(dir, database_name){
-        console.log('createDatabaseFile');
+    #createDatabaseFile(dir = '', database_name = ''){
+        try {
+            fs.writeFileSync(dir+'/noobdb/'+database_name+'/database.info.json', '{"database": '+database_name+', "relations": []}')
+            return true
+        } catch (error) {
+            console.error(error)
+            return false
+        }
     }
 
-    query(query = '', args = ''){
+
+    createRelation(){
+
+    }
+
+    insert(query = '', args = ''){
         console.log('query');
     }
 
